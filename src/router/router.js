@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 const routes = [
    { 
-      // path:'/',
-      // name:'',
-      // component:() => import('')
+      path:'/',
+      name:'options',
+      component:() => import('@/views/OptionsPage.vue')
    },
-   {},
+   {
+      path:'/composition',
+      name:'composition',
+      component:() => import('@/views/CompositionPage.vue')
+   },
    {},
    {},
 ]

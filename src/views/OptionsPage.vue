@@ -4,11 +4,7 @@
     <form-component
       @create="createPost"
     />
-    <h3 class="text-danger"
-      v-if="posts.length == 0"
-    >Список постов пуст ...</h3>
     <post-list
-      v-else
       :posts="posts"
       @removePost="removePost"
     />

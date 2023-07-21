@@ -4,8 +4,13 @@
     <form-component
       @create="createPost"
     />
+    <h3 class="text-danger"
+      v-if="posts.length == 0"
+    >Список постов пуст ...</h3>
     <post-list
+      v-else
       :posts="posts"
+      @removePost="removePost"
     />
   </div>
 </template>
@@ -28,6 +33,9 @@ export default {
    createPost(post){
       this.posts.push(post)
    },
+   removePost(post){
+      this.posts = this.posts.filter(p => p.id !== post.id)
+    }
   },
   
 };

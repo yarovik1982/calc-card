@@ -1,26 +1,18 @@
 <template>
    <div class="posts mt-3 ">
-    <div class="post mt-3 p-2 rounded"
-      v-for="(post, i) in posts"
-      :key="i"
-    >
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <h4 class="m-0">Post {{i + 1}}</h4>
-          <p  class="m-0">{{post.title}}</p>
-          <p  class="m-0">{{post.description}}</p>
-        </div>
-        <button class="btn btn-danger btn-sm"
-          
-        >Удалить</button>
-      </div>
+    <post-item
+      v-for="post in posts"
+      :key="post.id"
+      :post="post"
+      @removePost="$emit('removePost', post)"
+    />
     </div>
-    
-  </div>
 </template>
 
 <script>
+import PostItem from './PostItem.vue'
 export default {
+  components: { PostItem },
    name:'post-list',
    props:{
       posts:{

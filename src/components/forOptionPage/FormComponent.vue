@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid">
-    <form class="w-50 m-auto" @submit.prevent>
+    <form class="w-100 m-auto" @submit.prevent>
+      <h3 class="text-center text-secondary">Создать пост</h3>
       <div class="mb-3">
         <input
           type="text"

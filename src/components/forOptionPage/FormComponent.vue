@@ -18,7 +18,7 @@
           class="form-control form-control-sm bg-secondary border-0 text-light"
           id="description"
           name="description"
-          v-model="post.description"
+          v-model="post.body"
           autocomplete="off"
         />
       </div>
@@ -40,7 +40,7 @@ export default {
    return{
       post:{
          title:'',
-         description:'',
+         body:'',
       }
    }
   },
@@ -51,7 +51,7 @@ export default {
       
       this.post = {
          title:'',
-         description:'',
+         body:'',
       }
     },
   },

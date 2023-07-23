@@ -4,7 +4,7 @@
         <div>
           <p class="m-0">{{post.title}}</p>
           
-          <p class="m-0">{{post.description}}</p>
+          <p class="m-0">{{post.body}}</p>
         </div>
         <button class="btn btn-danger btn-sm"
           @click="$emit('removePost', post)"

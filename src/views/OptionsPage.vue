@@ -12,11 +12,13 @@
       > 
         Создать пост
       </app-buttom>
-      <app-select
+      <transition>
+        <app-select
         v-show="posts.length >= 1"
         v-model="selectedSort"
         :options="sortOption"
       ></app-select>
+      </transition>
     </div>
     <post-list 
       :posts="sortPosts" 
@@ -98,5 +100,15 @@ export default {
     rgb(65, 184, 131)
   );
   box-shadow: 0 0 9px 4px rgb(53, 73, 94);
+}
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

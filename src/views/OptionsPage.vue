@@ -18,7 +18,10 @@
         :options="sortOption"
       ></app-select>
     </div>
-    <post-list :posts="posts" @removePost="removePost" />
+    <post-list 
+      :posts="sortPosts" 
+      @removePost="removePost" 
+    />
   </div>
 </template>
 <script>
@@ -68,13 +71,18 @@ export default {
       }
     }
   },
-  watch:{
-    selectedSort(newValue){
-      this.posts.sort((a, b) => {
-        return (a[newValue] > b[newValue]) ? 1 : -1
-      })
+  computed:{
+    sortPosts(){
+      return [...this.posts].sort((a, b) => (a[this.selectedSort] > b[this.selectedSort]) ? 1 : -1)
     },
   },
+  // watch:{
+  //   selectedSort(newValue){
+  //     this.posts.sort((a, b) => {
+  //       return (a[newValue] > b[newValue]) ? 1 : -1
+  //     })
+  //   },
+  // },
   mounted(){
     this.fetchPost()
   },

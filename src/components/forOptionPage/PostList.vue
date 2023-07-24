@@ -28,14 +28,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.post{
-  background-image: linear-gradient(
-    0deg,
-    rgb(65, 184, 131),
-    rgba(65, 184, 131,.5)25% 75%,
-    rgb(65, 184, 131)
-  );
-  box-shadow: 0 0 9px 4px rgb(53, 73, 94);
-}
-</style>

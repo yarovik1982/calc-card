@@ -5,6 +5,13 @@
   <h1 class="text-center">Example Options API</h1>
 
   <div class="container-fluid">
+    <div class="d-flex justify-content-center">
+      <input
+        class="form-control form-control-sm w-50"
+        v-model="searchQuery"
+        placeholder="Поиск ..."
+      />
+    </div>
     <div class="d-flex py-4 justify-content-between align-items-center">
       <app-buttom
         class="btn btn-primary btn-sm text-nowrap"
@@ -20,8 +27,8 @@
         ></app-select>
       </transition>
     </div>
-    <post-list :posts="sortPosts" @removePost="removePost" v-if="!isLoading" />
-    <app-loader v-else/>
+    <post-list :posts="sortAndSearchPosts" @removePost="removePost" v-if="!isLoading" />
+    <app-loader v-else />
   </div>
 </template>
 <script>
@@ -30,22 +37,28 @@ import PostList from "@/components/forOptionPage/PostList.vue";
 import AppDialog from "@/components/UI/AppDialog.vue";
 import AppButtom from "@/components/UI/AppButtom.vue";
 import AppSelect from "@/components/UI/AppSelect.vue";
-import AppLoader from "@/components/UI/AppLoader.vue"
+import AppLoader from "@/components/UI/AppLoader.vue";
+import AppInput from "@/components/UI/AppInput.vue";
 
 import axios from "axios";
 export default {
-  components: { FormComponent, PostList, AppDialog, AppButtom, AppSelect, AppLoader },
+  components: {
+    FormComponent,
+    PostList,
+    AppDialog,
+    AppButtom,
+    AppSelect,
+    AppLoader,
+    AppInput,
+  },
   name: "options-page",
   data() {
     return {
-      posts: [
-        { id: 1, title: "Название поста", body: "Description 1" },
-        { id: 2, title: "Название поста", body: "Description 2" },
-        { id: 3, title: "Название поста", body: "Description 3" },
-      ],
+      posts: [],
       dialogVisible: false,
-      isLoading:false,
+      isLoading: false,
       selectedSort: "",
+      searchQuery:'',
       sortOption: [
         { value: "title", name: "названию" },
         { value: "body", name: "описанию" },
@@ -66,15 +79,15 @@ export default {
     },
     async fetchPost() {
       try {
-        this.isLoading = true
+        this.isLoading = true;
         const response = await axios.get(
           "https://jsonplaceholder.typicode.com/posts?_limit=10"
         );
         this.posts = response.data;
       } catch (e) {
         alert("Ошибка");
-      }finally{
-        this.isLoading = false
+      } finally {
+        this.isLoading = false;
       }
     },
   },
@@ -83,6 +96,9 @@ export default {
       return [...this.posts].sort((a, b) =>
         a[this.selectedSort] > b[this.selectedSort] ? 1 : -1
       );
+    },
+    sortAndSearchPosts(){
+      return this.sortPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
     },
   },
   // watch:{
@@ -118,5 +134,4 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="post mt-3 p-2 rounded">
+  <div class="post mt-3 p-2 ">
     <div class="container-fluid">
       <div class="row d-flex align-items-center">
         <div
@@ -36,3 +36,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.post{
+  /* background-image: linear-gradient(
+    0deg,
+    rgb(65, 184, 131),
+    rgba(65, 184, 131,.5)25% 75%,
+    rgb(65, 184, 131)
+  ); */
+  background-color: transparent;
+  
+  box-shadow:inset 0 0 32px 16px rgb(53, 73, 94);
+  border-radius: 8px;
+}
+</style>

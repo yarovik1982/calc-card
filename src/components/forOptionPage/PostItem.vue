@@ -6,6 +6,7 @@
           class="col-12 col-sm-9"
           style="padding-right: 16px; text-align: justify"
         >
+          <p class="m-0">{{post.id}}</p>
           <h3 class="m-0">{{ post.title }}</h3>
 
           <p class="m-0">{{ post.body }}</p>
@@ -39,14 +40,7 @@ export default {
 
 <style scoped>
 .post{
-  /* background-image: linear-gradient(
-    0deg,
-    rgb(65, 184, 131),
-    rgba(65, 184, 131,.5)25% 75%,
-    rgb(65, 184, 131)
-  ); */
   background-color: transparent;
-  
   box-shadow:inset 0 0 32px 16px rgb(53, 73, 94);
   border-radius: 8px;
 }

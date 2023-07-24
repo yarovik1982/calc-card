@@ -29,6 +29,17 @@
     </div>
     <post-list :posts="sortAndSearchPosts" @removePost="removePost" v-if="!isLoading" />
     <app-loader v-else />
+
+    <div class="pagination d-flex justify-content-center align-items-center gap-2 py-4">
+      <div 
+        class="pagination-item btn btn-primary btn-sm"
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        :class="{'current-item': page === pageNumber}"
+      
+        @click="changePage(pageNumber)"
+      >{{pageNumber}}</div>
+    </div>
   </div>
 </template>
 <script>
@@ -59,6 +70,9 @@ export default {
       isLoading: false,
       selectedSort: "",
       searchQuery:'',
+      page:1,
+      limit:10,
+      totalPages:0,
       sortOption: [
         { value: "title", name: "названию" },
         { value: "body", name: "описанию" },
@@ -77,12 +91,21 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    changePage(pageNumber){
+      this.page = pageNumber
+    },
     async fetchPost() {
       try {
         this.isLoading = true;
         const response = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+          "https://jsonplaceholder.typicode.com/posts?", {
+            params:{
+              _page:this.page,
+              _limit:this.limit,
+            }
+          }
         );
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
         this.posts = response.data;
       } catch (e) {
         alert("Ошибка");
@@ -101,13 +124,11 @@ export default {
       return this.sortPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery.toLowerCase()))
     },
   },
-  // watch:{
-  //   selectedSort(newValue){
-  //     this.posts.sort((a, b) => {
-  //       return (a[newValue] > b[newValue]) ? 1 : -1
-  //     })
-  //   },
-  // },
+  watch:{
+    page(){    //название ф-ции должно совпадать с именем свойства для, которого назначается наблюдатель
+      this.fetchPost()
+    },
+  },
   mounted() {
     this.fetchPost();
   },
@@ -115,16 +136,6 @@ export default {
 </script>
 
 <style scoped>
-.post {
-  background-image: linear-gradient(
-    0deg,
-    rgb(65, 184, 131),
-    rgba(65, 184, 131, 0.5) 25% 75%,
-    rgb(65, 184, 131)
-  );
-  box-shadow: 0 0 9px 4px rgb(53, 73, 94);
-}
-/* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
   transition: opacity 1s ease;
@@ -133,5 +144,9 @@ export default {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+.current-item{
+  background-color: #ccc;
+  color: teal;
 }
 </style>

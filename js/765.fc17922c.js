@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkcalc_card"]=self["webpackChunkcalc_card"]||[]).push([[765],{7765:function(c,e,n){n.r(e),n.d(e,{default:function(){return i}});var t=n(3396);const a={class:"text-center"};function r(c,e,n,r,s,o){return(0,t.wg)(),(0,t.iD)("h3",a,"Example Composition API")}var s={name:"composition-page",setup(){}},o=n(89);const u=(0,o.Z)(s,[["render",r]]);var i=u}}]);
+//# sourceMappingURL=765.fc17922c.js.map

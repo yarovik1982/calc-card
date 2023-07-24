@@ -1,8 +1,8 @@
 <template>
   <select
-    class="form-select form-select-sm  bg-primary text-light"
+    class="form-select form-select-sm  bg-primary text-light border-0"
     aria-label=".form-select-sm пример"
-    style="width:15%; min-width:170px;"
+    style="width:15%; min-width:180px; text-overflow:ellipsis;"
     :v-model="modelValue"
     @change="changeOption"
   >

@@ -6,24 +6,22 @@
 
   <div class="container-fluid">
     <div class="d-flex py-4 justify-content-between align-items-center">
-      <app-buttom 
-        class="btn btn-primary btn-sm text-nowrap" 
+      <app-buttom
+        class="btn btn-primary btn-sm text-nowrap"
         @click="showDialog"
-      > 
+      >
         Создать пост
       </app-buttom>
       <transition>
         <app-select
-        v-show="posts.length >= 1"
-        v-model="selectedSort"
-        :options="sortOption"
-      ></app-select>
+          v-show="posts.length >= 1"
+          v-model="selectedSort"
+          :options="sortOption"
+        ></app-select>
       </transition>
     </div>
-    <post-list 
-      :posts="sortPosts" 
-      @removePost="removePost" 
-    />
+    <post-list :posts="sortPosts" @removePost="removePost" v-if="!isLoading" />
+    <app-loader v-else/>
   </div>
 </template>
 <script>
@@ -31,11 +29,12 @@ import FormComponent from "@/components/forOptionPage/FormComponent.vue";
 import PostList from "@/components/forOptionPage/PostList.vue";
 import AppDialog from "@/components/UI/AppDialog.vue";
 import AppButtom from "@/components/UI/AppButtom.vue";
-import AppSelect from '@/components/UI/AppSelect.vue';
+import AppSelect from "@/components/UI/AppSelect.vue";
+import AppLoader from "@/components/UI/AppLoader.vue"
 
-import axios from 'axios'
+import axios from "axios";
 export default {
-  components: { FormComponent, PostList, AppDialog, AppButtom, AppSelect },
+  components: { FormComponent, PostList, AppDialog, AppButtom, AppSelect, AppLoader },
   name: "options-page",
   data() {
     return {
@@ -45,11 +44,12 @@ export default {
         { id: 3, title: "Название поста", body: "Description 3" },
       ],
       dialogVisible: false,
-      selectedSort:'',
-      sortOption:[
-        {value:'title',name:'названию'},
-        {value:'body',name:'описанию'},
-        {value:'id',name:'идентификатору'},
+      isLoading:false,
+      selectedSort: "",
+      sortOption: [
+        { value: "title", name: "названию" },
+        { value: "body", name: "описанию" },
+        { value: "id", name: "идентификатору" },
       ],
     };
   },
@@ -64,18 +64,25 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
-    async fetchPost(){
-      try{
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
-        this.posts = response.data
-      }catch(e){
-        alert("Ошибка")
+    async fetchPost() {
+      try {
+        this.isLoading = true
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts?_limit=10"
+        );
+        this.posts = response.data;
+      } catch (e) {
+        alert("Ошибка");
+      }finally{
+        this.isLoading = false
       }
-    }
+    },
   },
-  computed:{
-    sortPosts(){
-      return [...this.posts].sort((a, b) => (a[this.selectedSort] > b[this.selectedSort]) ? 1 : -1)
+  computed: {
+    sortPosts() {
+      return [...this.posts].sort((a, b) =>
+        a[this.selectedSort] > b[this.selectedSort] ? 1 : -1
+      );
     },
   },
   // watch:{
@@ -85,8 +92,8 @@ export default {
   //     })
   //   },
   // },
-  mounted(){
-    this.fetchPost()
+  mounted() {
+    this.fetchPost();
   },
 };
 </script>
@@ -111,4 +118,5 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
+
 </style>
